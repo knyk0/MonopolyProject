@@ -32,6 +32,12 @@ Classes:
    - Print of board (40 tiles, 11 each side) (also print properties of currentPlayer and their money)
    - Trade method
    - Upgrade method 
-   - turn
+   - turn method (go through switch statement if not in jail, otherwise roll for out of jail)
+   - (helper methods for turn):
+   - buyProperty
+   - payPayment
+   - payTax
+   - goToJail
+   - ..more that I haven't written
 
 
