@@ -12,4 +12,8 @@ public class Player {
         money = 1500;
     }
 
+    public String getName(){
+        return name;
+    }
+
 }

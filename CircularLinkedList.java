@@ -10,30 +10,55 @@ public class CircularLinkedList<T> {
         return first == null;
     }
     public void insertFirst(T newData){
+        Link newLink = new Link(newData);
         if(isEmpty()){
-            first = new Link(newData);
-            last = new Link(newData);
-            first.nextLink = first;
+            first = newLink;
+            last = newLink;
+            newLink.nextLink = first;
         }
         else {
-            Link newLink = new Link(newData);
             newLink.nextLink = first;
             first = newLink;
             last.nextLink = first;
         }
     }
+    public Link findLink(T targetData){
+        int i = 0;
+        Link currentLink = first;
+        while(i < 2){
+            if(currentLink == first){i++;}
+            if(currentLink.data == targetData){
+                return currentLink;
+            }
+            currentLink = currentLink.nextLink;
+        }
+        return null;
+    }
     boolean insertLink(T key, T data){
-
-        return true;
+        Link newLink = new Link(data);
+        Link foundLink = findLink(key);
+        newLink.nextLink = foundLink.nextLink;
+        foundLink.nextLink = newLink;
+        return false;
     }
     public void displayList(){
         Link currentLink = first;
         for(int i = 0;i < 10;i++){
-            System.out.print(currentLink.data);
+            if(currentLink.data instanceof Player){
+                System.out.print(((Player) currentLink.data).getName());
+            }
+            else{System.out.print(currentLink.data);}
             System.out.print(" --> ");
             currentLink = currentLink.nextLink;
         }
         System.out.println();
+    }
+    public CircularLinkedList arrayToLinks(Object[] arr){
+        CircularLinkedList list = new CircularLinkedList();
+        for(int i = arr.length-1;i > -1;i--){
+            list.insertFirst(arr[i]);
+        }
+        return list;
     }
 
 /*
