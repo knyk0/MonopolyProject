@@ -1,7 +1,7 @@
 public class Game {
 
-    CircularLinkedList players = new CircularLinkedList();
-    Player currentPlayer = players.first;
+    CircularLinkedList<Player> players = new CircularLinkedList<>();
+    Player currentPlayer = (Player) players.first.data;
     CircularLinkedList tiles = new CircularLinkedList();
 
     public Game(){
