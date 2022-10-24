@@ -21,4 +21,36 @@ public class BoardSpace {
         this.printName = printName;
         this.thisTileType = thisTileType;
     }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public int getHotelPrice() {
+        return hotelPrice;
+    }
+
+    public int getHousePrice() {
+        return housePrice;
+    }
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public String getPrintName() {
+        return printName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public tileType getThisTileType() {
+        return thisTileType;
+    }
 }
