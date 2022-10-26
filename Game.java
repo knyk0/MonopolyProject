@@ -1,7 +1,7 @@
 public class Game {
 
     CircularLinkedList<Player> players = new CircularLinkedList<>();
-    Player currentPlayer = (Player) players.first.data;
+    Player currentPlayer; //= (Player) players.first.data
     CircularLinkedList tiles = new CircularLinkedList();
 
     public Game(){
@@ -45,15 +45,13 @@ public class Game {
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Community Chest", "CC", BoardSpace.tileType.CommunityChest));
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Mediterranean", "Me", BoardSpace.tileType.Brown));
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Go", "Go", BoardSpace.tileType.Go));
-
     }
 
     public void printListOfBoard(){                  //for testing if the loop with board works
+        Link current = tiles.first;
         for(int i = 0; i<40; i++){
-         Link current = tiles.first;
          System.out.print(((BoardSpace)(current.data)).printName + ", ");
          current = current.nextLink;
-         i++;
     }
     }
     public void printBoard(){

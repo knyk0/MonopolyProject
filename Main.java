@@ -2,11 +2,16 @@ public class Main {
     public static void main(String[] args) {
 
 
+        Player bob = new Player("Bob");
+        Player joe = new Player("Joe");
+        Player jim = new Player("Jim");
 
-        CircularLinkedList test = new CircularLinkedList();
-        test = test.arrayToLinks(new Player[]{new Player("First"),new Player("Second"),new Player("Third")});
 
-        test.displayList();
+        Game newGame = new Game();
+        newGame.players.insertFirst(bob);
+        newGame.players.insertFirst(joe);
+        newGame.players.insertFirst(jim);
+        newGame.printListOfBoard();
 
     }
 }
