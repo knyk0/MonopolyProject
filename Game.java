@@ -55,7 +55,30 @@ public class Game {
     }
     }
     public void printBoard(){
-
+          System.out.print("\n");
+        Link current = tiles.first;
+        for(int i = 0; i <11; i++){
+            System.out.print("\t| " + ((BoardSpace)(current.data)).printName);
+            current = current.nextLink;
+        }
+        System.out.print("\t|\n");
+        for(int i = 0; i < 9; i++){
+            Link current2 = current;
+            for(int j = 1; j < 29 -2*i; j++){
+                current2 = current2.nextLink;
+            }
+            System.out.print("\t| " + ((BoardSpace)(current2.data)).printName +"\t|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t| "+ ((BoardSpace)(current.data)).printName + "\t|");
+            current = current.nextLink;
+            System.out.print("\n");
+        }
+        for(int i = 11; i > 0; i--){
+            Link current3 = current;
+            for(int k = 1; k < i; k++){
+                current3 = current3.nextLink;
+            }
+            System.out.print("\t| " + ((BoardSpace)(current3.data)).printName);
+        }
+        System.out.print("\t|");
     }
     public void trade(){
 
