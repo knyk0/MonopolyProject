@@ -99,8 +99,42 @@ public class Game {
     public void trade(){
         System.out.println("");
     }
-    public void upgrade(){
-
+    public void upgrade(Player player){
+        for(int i = 0; i < player.completedSets.size(); i++){
+            System.out.println( i +": "+ player.completedSets.get(0));
+        }
+        System.out.println("Which set would you like to upgrade? (use number printed in list):");
+        BoardSpace.tileType upgradeSet = player.completedSets.get(Integer.parseInt(in.nextLine()));
+        ArrayList<BoardSpace> setSpaces = new ArrayList<BoardSpace>();
+        for(int i = 0; i < 40; i++){
+            Link current = tiles.first;
+            if(((BoardSpace)(current.data)).thisTileType == upgradeSet){
+                System.out.println(i+": "+ ((BoardSpace)(current.data)).getPropertyName());
+                setSpaces.add((BoardSpace)(current.data));
+            }
+            current = current.nextLink;
+        }
+        System.out.println("Which property would you like to upgrade? (use number printed in list): ");
+        BoardSpace upgradeTile = setSpaces.get(Integer.parseInt(in.nextLine()));
+        if(upgradeTile.getHouseLevel()== 5){
+            System.out.println("This property is already maxed out with a hotel.");
+        } else if (upgradeTile.getHouseLevel()==4){
+            System.out.println("You have paid "+ upgradeTile.getHotelPrice() +" to add a hotel to " + upgradeTile.propertyName);
+            player.setMoney(player.getMoney()- upgradeTile.getHotelPrice());
+            upgradeTile.setHouseLevel(upgradeTile.getHouseLevel()+1);
+        } else {
+            player.setMoney(player.getMoney()- upgradeTile.getHousePrice());
+            upgradeTile.setHouseLevel(upgradeTile.getHouseLevel()+1);
+            if (upgradeTile.getHouseLevel()==3){
+                System.out.println("You have paid "+ upgradeTile.getHousePrice() +" to add your fourth house to " + upgradeTile.propertyName);
+            }else if (upgradeTile.getHouseLevel()==2){
+                System.out.println("You have paid "+ upgradeTile.getHousePrice() +" to add your third house to " + upgradeTile.propertyName);
+            }else if (upgradeTile.getHouseLevel()==1){
+                System.out.println("You have paid "+ upgradeTile.getHousePrice() +" to add your second house to " + upgradeTile.propertyName);
+            }else if (upgradeTile.getHouseLevel()==0){
+                System.out.println("You have paid "+ upgradeTile.getHousePrice() +" to add your first house to " + upgradeTile.propertyName);
+            }
+        }
     }
     public void turn(Player currentPlayer, BoardSpace currentBoardSpace){
         if(currentBoardSpace.getOwner() == null){
