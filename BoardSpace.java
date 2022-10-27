@@ -34,7 +34,12 @@ public class BoardSpace {
                 else{System.out.print(currentPlayersOnTile.get(i).getName());}
             }
         System.out.println();
-        System.out.println("Price: "+price);
+            if(owner == null && (thisTileType == BoardSpace.tileType.Red || thisTileType == BoardSpace.tileType.Orange || thisTileType == BoardSpace.tileType.Yellow || thisTileType == BoardSpace.tileType.Green || thisTileType == BoardSpace.tileType.Blue || thisTileType == BoardSpace.tileType.lightBlue || thisTileType == BoardSpace.tileType.Brown || thisTileType == BoardSpace.tileType.Pink || thisTileType == BoardSpace.tileType.Utilities || thisTileType == BoardSpace.tileType.Railroad)){
+                System.out.println("Price: "+price);
+            }
+            else{
+                System.out.println("Price: N/A");
+            }
         System.out.println("Property Name: "+propertyName);
     }
     public Player getOwner() {
@@ -60,7 +65,9 @@ public class BoardSpace {
     public int getPayment() {
         return payment;
     }
-
+    public void setPayment(int payment){
+        this.payment = payment;
+    }
     public String getPrintName() {
         return printName;
     }

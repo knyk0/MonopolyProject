@@ -3,13 +3,14 @@ import java.util.ArrayList;
 public class Player {
 
     BoardSpace currentBoardSpace;
-    boolean inJail;
+    int jailRolls;
     String name;
     int money;
-    ArrayList<BoardSpace.tileType> completedSets;
+    ArrayList<BoardSpace> ownedProperties = new ArrayList<>();
+    ArrayList<BoardSpace.tileType> completedSets = new ArrayList<>();
 
     public Player(String name){
-        this.inJail = false;
+        this.jailRolls = 0;
         this.name = name;
         money = 1500;
     }
@@ -47,6 +48,9 @@ public class Player {
     public void addToCompletedSets(BoardSpace.tileType tileType){
         completedSets.add(tileType);
     }
+    public void addToOwnedProperties(){
+
+    }
     public void setCurrentBoardSpace(BoardSpace currentBoardSpace){
         this.currentBoardSpace = currentBoardSpace;
     }
@@ -56,8 +60,11 @@ public class Player {
     public ArrayList<BoardSpace.tileType> getCompletedSets(){
         return completedSets;
     }
-    public void setInJail(boolean inJail){
-        this.inJail = inJail;
+    public int getJailRolls(){
+        return jailRolls;
+    }
+    public void setJailRolls(int jailRolls){
+        this.jailRolls = jailRolls;
     }
     public String getName(){
         return name;
