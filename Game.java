@@ -57,6 +57,7 @@ public class Game {
     public void printBoard(){
           System.out.print("\n");
         Link current = tiles.first;
+        System.out.println("    _________________________________________________________________________________________");
         for(int i = 0; i <11; i++){
             System.out.print("\t| " + ((BoardSpace)(current.data)).printName);
             current = current.nextLink;
@@ -78,7 +79,8 @@ public class Game {
             }
             System.out.print("\t| " + ((BoardSpace)(current3.data)).printName);
         }
-        System.out.print("\t|");
+        System.out.println("\t|");
+        System.out.println("    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
     }
     public void trade(){
 

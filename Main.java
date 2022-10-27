@@ -11,7 +11,7 @@ public class Main {
         newGame.players.insertFirst(bob);
         newGame.players.insertFirst(joe);
         newGame.players.insertFirst(jim);
-        newGame.printListOfBoard();
+        newGame.printBoard();
 
     }
 }
