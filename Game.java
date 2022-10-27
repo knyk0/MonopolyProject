@@ -4,13 +4,13 @@ import java.util.Scanner;
 public class Game {
 
     CircularLinkedList<Player> players = new CircularLinkedList<>();
-    Player currentPlayer; //= (Player) players.first.data
+    Player currentPlayer;
     CircularLinkedList tiles = new CircularLinkedList();
 
     public Game(){
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Boardwalk", "BW", BoardSpace.tileType.Blue));
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Luxury Tax", "LT", BoardSpace.tileType.Utilities));
-        tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Park Place", "PP", BoardSpace.tileType.Blue));
+        tiles.insertFirst(new BoardSpace(350, 0, 0,0,"Park Place", "PP", BoardSpace.tileType.Blue));
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Chance", "Ch", BoardSpace.tileType.Chance));
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Short Line", "SL", BoardSpace.tileType.Railroad));
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Pennsylvania", "PA", BoardSpace.tileType.Green));
@@ -98,10 +98,12 @@ public class Game {
     }
     public void turn(Player currentPlayer, BoardSpace currentBoardSpace){
         if(currentBoardSpace.getOwner() == null){
-            System.out.println("a) Buy Property");
+            if(currentBoardSpace.getThisTileType() == BoardSpace.tileType.Red || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Orange || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Yellow || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Green || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Blue || currentBoardSpace.getThisTileType() == BoardSpace.tileType.lightBlue || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Brown || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Pink || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Utilities || currentBoardSpace.getThisTileType() == BoardSpace.tileType.Railroad){
+                System.out.println("a) Buy");
+            }
         }
         else{
-            System.out.println("a) Pay Rent");
+            System.out.println("b) Pay");
         }
 
 
