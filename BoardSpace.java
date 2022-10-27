@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 public class BoardSpace {
 
     Player owner;
+    ArrayList<Player> currentPlayersOnTile = new ArrayList<>();
     int price;
     int payment;
     int housePrice;
@@ -21,11 +24,28 @@ public class BoardSpace {
         this.printName = printName;
         this.thisTileType = thisTileType;
     }
-
+    public void printBoardSpaceAttributes(){
+        if(owner != null){System.out.print("Owner: "+owner.getName());}
+        System.out.print("Players: ");
+            for(int i = 0;i < currentPlayersOnTile.size();i++){
+                System.out.print(currentPlayersOnTile.get(i).getName());
+            }
+        System.out.println();
+        System.out.println("Price: "+price);
+        System.out.println("Property Name: "+propertyName);
+    }
     public Player getOwner() {
         return owner;
     }
-
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+    public void addToCurrentPlayers(Player player){
+        currentPlayersOnTile.add(player);
+    }
+    public void removePlayer(Player player){
+        currentPlayersOnTile.remove(player);
+    }
     public int getHotelPrice() {
         return hotelPrice;
     }

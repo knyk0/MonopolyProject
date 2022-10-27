@@ -12,6 +12,7 @@ public class Main {
         newGame.players.insertFirst(joe);
         newGame.players.insertFirst(jim);
         newGame.printBoard();
-
+        ((BoardSpace)(newGame.tiles.first.nextLink.data)).addToCurrentPlayers(bob);
+        ((BoardSpace)(newGame.tiles.first.nextLink.data)).printBoardSpaceAttributes();
     }
 }
