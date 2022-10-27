@@ -1,9 +1,11 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
         Game newGame = new Game();
         newGame.printListOfBoard();
-        newGame.printBoard();
+        newGame.printBoard(null);
 
         Scanner in = new Scanner(System.in);
 
@@ -44,15 +46,15 @@ public class Main {
                 newGame.getOutOfJail((Player)(currentPlayerLink.data));
             } else {
 
-                newGame.turn();
+                //newGame.turn();
                 System.out.println("Would you like to propose a trade? (n:0, y:1)");
                 if(Integer.parseInt(in.nextLine())==1){
-                    newGame.trade();
+                    //newGame.trade();
                 }
                 if(!((Player)(currentPlayerLink.data)).completedSets.isEmpty()){
                     System.out.println("Would you like to upgrade (add houses/hotels to) any of your completed sets? (n:0, y:1)");
                     if(Integer.parseInt(in.nextLine())== 1){
-                        newGame.upgrade(((Player)(currentPlayerLink.data)));
+                        //newGame.upgrade(((Player)(currentPlayerLink.data)));
                     }
                 }
                 

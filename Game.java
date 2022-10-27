@@ -76,6 +76,12 @@ public class Game {
             for(int j = 1; j < 29 -2*i; j++){
                 current2 = current2.nextLink;
             }
+            if(currentPlayer.getCurrentBoardSpace() == (current.data)){
+                System.out.print("\t| \u001B[31m" + ((BoardSpace)(current2.data)).printName +"\u001B[0m\t|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t| \u001B[31m"+ ((BoardSpace)(current.data)).printName + "\u001B[0m\t|");
+            }
+            else{
+
+            }
             System.out.print("\t| " + ((BoardSpace)(current2.data)).printName +"\t|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t| "+ ((BoardSpace)(current.data)).printName + "\t|");
             current = current.nextLink;
             System.out.print("\n");
@@ -139,7 +145,7 @@ public class Game {
                 }
             }
             else{
-        //edwda
+
             }
         }
         else{ //If in jail
