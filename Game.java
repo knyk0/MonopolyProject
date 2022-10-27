@@ -6,6 +6,8 @@ public class Game {
     CircularLinkedList<Player> players = new CircularLinkedList<>();
     Player currentPlayer;
     CircularLinkedList<BoardSpace> tiles = new CircularLinkedList<>();
+    Scanner in = new Scanner(System.in);
+
 
     public Game(){
         tiles.insertFirst(new BoardSpace(400, 0, 0,0,"Boardwalk", "BW", BoardSpace.tileType.Blue));
