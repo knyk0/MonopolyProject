@@ -52,7 +52,7 @@ public class Main {
                 if(!((Player)(currentPlayerLink.data)).completedSets.isEmpty()){
                     System.out.println("Would you like to upgrade (add houses/hotels to) any of your completed sets? (n:0, y:1)");
                     if(Integer.parseInt(in.nextLine())== 1){
-                        newGame.upgrade();
+                        newGame.upgrade(((Player)(currentPlayerLink.data)));
                     }
                 }
                 
