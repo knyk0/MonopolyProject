@@ -3,10 +3,11 @@ Nicolas Aviles and Nora Doughty - Monopoly Project
 
 Classes:
 - Main
-   - Input loop
-   - Turn
-   - Ask about trading
-   - Ask about upgrades for any complete sets
+   - If they're in jail -> roll, if double, out, if not, tally to three ang get them out
+   - Otherwise:
+   - Take their turn (roll dice, land on space, show attributes of space, if it has owner pay payment, if can buy ask if they want to buy, if not buyable pay payement           if needed)
+   - Ask about trading (if yes, ask who, print list of their properties, propose property for trade, ask other person if they will take the offer, otherwise loop back)
+   - Ask about upgrading property for any completed sets
 - BoardSpace
    - Instance Variables:
    - Player owner (or Bank)(or Null)
