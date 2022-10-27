@@ -69,5 +69,11 @@ public class Player {
     public String getName(){
         return name;
     }
+    public int getMoney(){
+        return money;
+    }
+    public void setMoney(int money){
+        this.money = money;
+    }
 
 }
