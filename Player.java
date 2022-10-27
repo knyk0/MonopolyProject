@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Player {
 
+    BoardSpace currentBoardSpace;
     boolean inJail;
     String name;
     int money;
@@ -46,7 +47,12 @@ public class Player {
     public void addToCompletedSets(BoardSpace.tileType tileType){
         completedSets.add(tileType);
     }
-
+    public void setCurrentBoardSpace(BoardSpace currentBoardSpace){
+        this.currentBoardSpace = currentBoardSpace;
+    }
+    public BoardSpace getCurrentBoardSpace(){
+        return this.currentBoardSpace;
+    }
     public ArrayList<BoardSpace.tileType> getCompletedSets(){
         return completedSets;
     }

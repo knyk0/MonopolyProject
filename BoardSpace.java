@@ -28,7 +28,10 @@ public class BoardSpace {
         if(owner != null){System.out.print("Owner: "+owner.getName());}
         System.out.print("Players: ");
             for(int i = 0;i < currentPlayersOnTile.size();i++){
-                System.out.print(currentPlayersOnTile.get(i).getName());
+                if(i < currentPlayersOnTile.size()-1){
+                    System.out.print(currentPlayersOnTile.get(i).getName()+", ");
+                }
+                else{System.out.print(currentPlayersOnTile.get(i).getName());}
             }
         System.out.println();
         System.out.println("Price: "+price);

@@ -57,12 +57,17 @@ public class Game {
          current = current.nextLink;
     }
     }
-    public void printBoard(){
+    public void printBoard(Player currentPlayer){
           System.out.print("\n");
         Link current = tiles.first;
         System.out.println("    _________________________________________________________________________________________");
         for(int i = 0; i <11; i++){
-            System.out.print("\t| " + ((BoardSpace)(current.data)).printName);
+            if(currentPlayer.getCurrentBoardSpace() == (current.data)){
+                System.out.print("\t| \u001B[31m" + ((BoardSpace)(current.data)).printName+"\u001B[0m");
+            }
+            else{
+                System.out.print("\t| " + ((BoardSpace)(current.data)).printName);
+            }
             current = current.nextLink;
         }
         System.out.print("\t|\n");
@@ -107,6 +112,7 @@ public class Game {
     public boolean diceRoll(){
         boolean matchingDiceRolls = false;
         int firstRoll = 0;
+        int combinedRoll = 0;
         for(int i = 0; i < 2;i++) {
             Random rand = new Random();
             int roll = rand.nextInt(6) + 1;
@@ -117,9 +123,21 @@ public class Game {
             if(roll == firstRoll){
                 matchingDiceRolls = true;
             }
+            combinedRoll = firstRoll + roll;
             firstRoll = roll;
         }
+        move(combinedRoll);
         return matchingDiceRolls;
+    }
+    public void move(int spaces){
+        currentPlayer.getCurrentBoardSpace().removePlayer(currentPlayer);
+        Link currentLink = tiles.first;
+        for(int i = 0; i < spaces; i++){
+            currentLink = currentLink.nextLink;
+        }
+        BoardSpace newBoardSpace = (BoardSpace)(currentLink.data);
+        currentPlayer.setCurrentBoardSpace(newBoardSpace);
+        newBoardSpace.addToCurrentPlayers(currentPlayer);
     }
     public void buyProperty(){
 
