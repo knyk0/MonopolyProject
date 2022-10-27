@@ -14,5 +14,6 @@ public class Main {
         newGame.printBoard();
         ((BoardSpace)(newGame.tiles.first.nextLink.data)).addToCurrentPlayers(bob);
         ((BoardSpace)(newGame.tiles.first.nextLink.data)).printBoardSpaceAttributes();
+        newGame.diceRoll();
     }
 }

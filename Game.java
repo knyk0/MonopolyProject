@@ -1,3 +1,6 @@
+import java.util.Random;
+import java.util.Scanner;
+
 public class Game {
 
     CircularLinkedList<Player> players = new CircularLinkedList<>();
@@ -83,13 +86,40 @@ public class Game {
         System.out.println("    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
     }
     public void trade(){
-
+        System.out.println("");
     }
     public void upgrade(){
 
     }
-    public void turn(){
+    public void turn(Player currentPlayer, BoardSpace currentBoardSpace){
+        if(currentBoardSpace.getOwner() == null){
+            System.out.println("a) Buy Property");
+        }
+        else{
+            System.out.println("a) Pay Rent");
+        }
 
+
+
+        Scanner in = new Scanner(System.in);
+        System.out.println(currentPlayer+", roll the dice.");
+    }
+    public boolean diceRoll(){
+        boolean matchingDiceRolls = false;
+        int firstRoll = 0;
+        for(int i = 0; i < 2;i++) {
+            Random rand = new Random();
+            int roll = rand.nextInt(6) + 1;
+            for(int j = 0; j < roll; j++){
+                System.out.print("•");
+            }
+            System.out.println(" "+roll);
+            if(roll == firstRoll){
+                matchingDiceRolls = true;
+            }
+            firstRoll = roll;
+        }
+        return matchingDiceRolls;
     }
     public void buyProperty(){
 
@@ -100,10 +130,12 @@ public class Game {
     public void payTax(){
 
     }
-    public void goToJail(){
-
+    public void goToJail(Player player){
+        player.setInJail(true);
     }
-    public void getOutOfJail(){
-
+    public void getOutOfJail(Player player, boolean diceRoll){
+        if(diceRoll){
+            player.setInJail(false);
+        }
     }
 }

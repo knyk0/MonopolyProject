@@ -2,11 +2,13 @@ import java.util.ArrayList;
 
 public class Player {
 
+    boolean inJail;
     String name;
     int money;
     ArrayList<BoardSpace.tileType> completedSets;
 
     public Player(String name){
+        this.inJail = false;
         this.name = name;
         money = 1500;
     }
@@ -48,7 +50,9 @@ public class Player {
     public ArrayList<BoardSpace.tileType> getCompletedSets(){
         return completedSets;
     }
-
+    public void setInJail(boolean inJail){
+        this.inJail = inJail;
+    }
     public String getName(){
         return name;
     }
