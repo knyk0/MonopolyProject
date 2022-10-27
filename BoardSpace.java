@@ -87,7 +87,7 @@ public class BoardSpace {
     public int getHouseLevel(){
         return houseLevel;
     }
-    public void setHouseLevel(){
+    public void setHouseLevel(int houseLevel){
         this.houseLevel = houseLevel;
     }
 }
