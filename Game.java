@@ -149,17 +149,23 @@ public class Game {
         System.out.println("    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
     }
     public void trade(Player player){
-        Link current = players.first;
+         Link current = players.first;
         boolean canTrade = false;
         ArrayList<Player> tradePlayers = new ArrayList<Player>();
-        while(current != players.last){
-            if(((Player)(current.data)).completedSets.size() != 0){
+        if(((Player)(current.data)).ownedProperties.size() != 0){
+            canTrade = true;
+            tradePlayers.add((Player)(current.data));
+        }
+        current = current.nextLink;
+        while(current != players.first){
+            if(((Player)(current.data)).ownedProperties.size() != 0){
                 canTrade = true;
                 tradePlayers.add((Player)(current.data));
             }
             current = current.nextLink;
         }
-        if(canTrade){
+        tradePlayers.remove(player);
+        if(canTrade && tradePlayers.size()>0){
             for(int i = 0; i < tradePlayers.size();i++){
                 System.out.println(i + ": "+ tradePlayers.get(i).getName());
             }
