@@ -149,7 +149,95 @@ public class Game {
         System.out.println("    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
     }
     public void trade(){
-        System.out.println("");
+        Link current = players.first;
+        boolean canTrade = false;
+        ArrayList<Player> tradePlayers = new ArrayList<Player>();
+        while(current != players.last){
+            if(((Player)(current.data)).completedSets.size() != 0){
+                canTrade = true;
+                tradePlayers.add((Player)(current.data));
+            }
+            current = current.nextLink;
+        }
+        if(canTrade){
+            for(int i = 0; i < tradePlayers.size();i++){
+                System.out.println(i + ": "+ tradePlayers.get(i).getName());
+            }
+            System.out.println("Who would you like to trade with (enter number)");
+            Player tradePlayer = tradePlayers.get(Integer.parseInt(in.nextLine()));
+
+            System.out.println ("Would you like to sell a property (0), buy a property (1), or trade property for other property (2)");
+            int tradeType = Integer.parseInt(in.nextLine());
+            if(tradeType==0){
+                for(int i = 0; i < player.ownedProperties.size();i++){
+                    System.out.println(i + ": "+player.ownedProperties.get(i).propertyName);
+                }
+                System.out.println("Which of your properties would you like to sell " + tradePlayer.name + "? (Enter number from list)");
+                BoardSpace sellSpace = player.ownedProperties.get(Integer.parseInt(in.nextLine()));
+                System.out.println("How much money would you like them to pay?");
+                int sellMoney = Integer.parseInt(in.nextLine());
+                System.out.println("\u001B[31m" +  tradePlayer.name +"\u001B[0m, would you like to accept the trade of " + sellSpace.propertyName + " for " + sellMoney + " Dollars? (No:0, Yes:1)");
+                if(Integer.parseInt(in.nextLine()) == 1){
+                    System.out.println(player.name +" has given " + tradePlayer.name + " " + sellSpace.propertyName + " for " + sellMoney + " dollars.");
+                    tradePlayer.setMoney(tradePlayer.getMoney()-sellMoney);
+                    player.setMoney(player.getMoney()+sellMoney);
+                    player.ownedProperties.remove(sellSpace);
+                    tradePlayer.ownedProperties.add(sellSpace);
+                    sellSpace.setOwner(tradePlayer);
+                } else {
+                    System.out.println("The trade has been declined.");
+                }
+            } else if (tradeType==1){
+                for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
+                    System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
+                }
+                System.out.println("Which property would you like to buy from " + tradePlayer.name + "? (Enter number from list)");
+                BoardSpace buySpace = tradePlayer.ownedProperties.get(Integer.parseInt(in.nextLine()));
+                System.out.println("How much money would you like to propose to pay?");
+                int buyMoney = Integer.parseInt(in.nextLine());
+                System.out.println("\u001B[31m" +  tradePlayer.name +"\u001B[0m, would you like to accept the trade of " + buySpace.propertyName + " for " + buyMoney + " Dollars? (No:0, Yes:1)");
+                if(Integer.parseInt(in.nextLine()) == 1){
+                    System.out.println(tradePlayer.name +" has given " + player.name + " " + buySpace.propertyName + " for " + buyMoney + " dollars.");
+                    tradePlayer.setMoney(tradePlayer.getMoney()+buyMoney);
+                    player.setMoney(player.getMoney()-buyMoney);
+                    player.ownedProperties.add(buySpace);
+                    tradePlayer.ownedProperties.remove(buySpace);
+                    buySpace.setOwner(player);
+                } else {
+                    System.out.println("The trade has been declined.");
+                }
+
+            } else if (tradeType==2){
+                for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
+                    System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
+                }
+                System.out.println("Which property would you like to get from " + tradePlayer.name + "? (Enter number from list)");
+                BoardSpace buySpace = tradePlayer.ownedProperties.get(Integer.parseInt(in.nextLine()));
+
+                for(int i = 0; i < player.ownedProperties.size();i++){
+                    System.out.println(i + ": "+player.ownedProperties.get(i).propertyName);
+                }
+                System.out.println("Which of your properties would you like to give to " + tradePlayer.name + "? (Enter number from list)");
+                BoardSpace sellSpace = player.ownedProperties.get(Integer.parseInt(in.nextLine()));
+
+                System.out.println("\u001B[31m" +  tradePlayer.name +"\u001B[0m, would you like to accept the trade of " + buySpace.propertyName + " for " + sellSpace.propertyName + "? (No:0, Yes:1)");
+                if(Integer.parseInt(in.nextLine()) == 1){
+                    System.out.println(tradePlayer.name +" has given " + player.name + " " + buySpace.propertyName + " for " + sellSpace.propertyName + ".");
+                    player.ownedProperties.add(buySpace);
+                    tradePlayer.ownedProperties.remove(buySpace);
+                    player.ownedProperties.remove(sellSpace);
+                    tradePlayer.ownedProperties.add(sellSpace);
+                    buySpace.setOwner(player);
+                    sellSpace.setOwner(tradePlayer);
+                } else {
+                    System.out.println("The trade has been declined.");
+                }
+
+            }
+
+        } else {
+            System.out.println("There aren't any bought properties to trade");
+        }
     }
     public void upgrade(Player player){
         for(int i = 0; i < player.completedSets.size(); i++){
