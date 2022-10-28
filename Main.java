@@ -4,7 +4,6 @@ public class Main {
     public static void main(String[] args) {
 
         Game newGame = new Game();
-
         Scanner in = new Scanner(System.in);
 
         System.out.println("Please enter the name of your first player:");
@@ -42,17 +41,18 @@ public class Main {
         while(gameOn){
                 newGame.currentPlayer = (Player)(currentPlayerLink.data);
                 newGame.turn(((Player)(currentPlayerLink.data)),((Player)(currentPlayerLink.data)).currentBoardSpace);
-                System.out.println("Would you like to propose a trade? (n:0, y:1)");
-                if(Integer.parseInt(in.nextLine())==1){
-                    newGame.trade();
-                }
-                if(!((Player)(currentPlayerLink.data)).completedSets.isEmpty()){
-                    System.out.println("Would you like to upgrade (add houses/hotels to) any of your completed sets? (n:0, y:1)");
-                    if(Integer.parseInt(in.nextLine())== 1){
-                        newGame.upgrade(((Player)(currentPlayerLink.data)));
+                if(newGame.currentPlayer.getJailRolls() <= 0 && newGame.currentPlayer.getMoney() > 0){
+                    System.out.println("Would you like to propose a trade? (n:0, y:1)");
+                    if(Integer.parseInt(in.nextLine())==1){
+                        newGame.trade();
+                    }
+                    if(!((Player)(currentPlayerLink.data)).completedSets.isEmpty()){
+                        System.out.println("Would you like to upgrade (add houses/hotels to) any of your completed sets? (n:0, y:1)");
+                        if(Integer.parseInt(in.nextLine())== 1){
+                            newGame.upgrade(((Player)(currentPlayerLink.data)));
+                        }
                     }
                 }
-                
 
 
             currentPlayerLink = currentPlayerLink.nextLink;

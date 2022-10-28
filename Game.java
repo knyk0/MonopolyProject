@@ -211,12 +211,13 @@ public class Game {
                 }
         }
         else if(currentBoardSpace.getOwner() != currentPlayer && currentBoardSpace.getPrice() > 0){
-            if(currentPlayer.getMoney() >= currentBoardSpace.getPrice()){
-                System.out.println("You paid "+currentBoardSpace.getPrice()+".");
-                currentPlayer.setMoney(currentPlayer.getMoney() - currentBoardSpace.getPrice());
+            if(currentPlayer.getMoney() >= currentBoardSpace.getPayment()){
+                System.out.println("You paid "+currentBoardSpace.getPayment()+".");
+                currentPlayer.setMoney(currentPlayer.getMoney() - currentBoardSpace.getPayment());
             }
             else{
                 System.out.println("You can't afford to pay rent, you're out!");
+                currentPlayer.setMoney(0);
                 playerExit();
             }
         }
@@ -248,8 +249,15 @@ public class Game {
                     currentPlayer.getCurrentBoardSpace().setPayment(combinedRoll * 4);
                 }
             }
-            else if(currentPlayer.getCurrentBoardSpace().getThisTileType() == BoardSpace.tileType.Railroad){
-
+            else if(currentPlayer.getCurrentBoardSpace().getOwner() != null && currentPlayer.getCurrentBoardSpace().getThisTileType() == BoardSpace.tileType.Railroad){
+                int railroadNum = 0;
+                for(int i = 0; i < currentPlayer.getCurrentBoardSpace().getOwner().getOwnedProperties().size();i++){
+                    if(currentPlayer.getCurrentBoardSpace().getOwner().getOwnedProperties().get(i).getThisTileType().equals(BoardSpace.tileType.Railroad)){ //Looking for railroad spaces owned by the space's owner
+                        railroadNum++;
+                    }
+                }
+                railroadNum = (int)(12.5 * Math.pow(2,railroadNum));
+                currentPlayer.getCurrentBoardSpace().setPayment(railroadNum);
             }
             else if(currentPlayer.getCurrentBoardSpace().getThisTileType() == BoardSpace.tileType.GoToJail){
                 goToJail(currentPlayer);
