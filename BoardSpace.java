@@ -26,8 +26,8 @@ public class BoardSpace {
         this.thisTileType = thisTileType;
     }
     public void printBoardSpaceAttributes(){
-        if(owner != null){System.out.print("Owner: "+owner.getName());}
-        System.out.print("Players: ");
+        if(owner != null){System.out.println("Owner: "+owner.getName());}
+        System.out.print("Players on this tile: ");
             for(int i = 0;i < currentPlayersOnTile.size();i++){
                 if(i < currentPlayersOnTile.size()-1){
                     System.out.print(currentPlayersOnTile.get(i).getName()+", ");

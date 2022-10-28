@@ -27,7 +27,7 @@ public class Player {
                 if (currentLink == list.first) {
                     j++;
                 }
-                if (((BoardSpace)(currentLink.data)).getThisTileType() == sets[type]) {
+                if (((BoardSpace)(currentLink.data)).getThisTileType() == sets[type] && ((BoardSpace)(currentLink.data)).getOwner() == owner) {
                     setNum++;
                 }
                 currentLink = currentLink.nextLink;
@@ -45,7 +45,20 @@ public class Player {
             }
         }
     }
+    public void printPlayerAttributes(){
+        System.out.println("Money: "+money);
+        System.out.println("Owned Properties: ");
+        for(int i = 0; i < ownedProperties.size(); i++){
+            System.out.print(ownedProperties.get(i).getPropertyName() + ", Rent: "+ownedProperties.get(i).getPayment()+" ");
+        }
+        System.out.println();
+        System.out.println("Completed Sets: ");
+        for(int i = 0; i < completedSets.size(); i++){
+            System.out.print(completedSets.get(i).toString() + " ");
+        }
+        System.out.println();
 
+    }
     public void addToCompletedSets(BoardSpace.tileType tileType){
         completedSets.add(tileType);
     }

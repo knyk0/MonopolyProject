@@ -191,12 +191,19 @@ public class Game {
     public void turn(Player currentPlayer, BoardSpace currentBoardSpace){
         Scanner in = new Scanner(System.in);
         printBoard(currentPlayer);
+        currentPlayer.parseForCompletedSets(currentPlayer,tiles);
         System.out.println(currentPlayer.getName()+", you are on "+currentBoardSpace.getPropertyName());
         diceRoll();
         printBoard(currentPlayer);
+        System.out.println("\u001B[31m"+currentPlayer.getName()+"\u001B[0m:");
+        System.out.println("------------------------------------------------------");
+        currentPlayer.printPlayerAttributes();
+        System.out.println("------------------------------------------------------");
         currentBoardSpace = currentPlayer.getCurrentBoardSpace();
-        currentBoardSpace.printBoardSpaceAttributes();
         System.out.println(currentPlayer.getName()+", now you are on "+currentBoardSpace.getPropertyName());
+        System.out.println("------------------------------------------------------");
+        currentBoardSpace.printBoardSpaceAttributes();
+        System.out.println("------------------------------------------------------");
         if(currentBoardSpace.getOwner() == null && currentBoardSpace.getPrice() > 0){ //Buyable properties have a price, non-buyable properties do not
                 System.out.println("Buy for "+currentBoardSpace.getPrice()+"? (n:0, y:1)");
                 if(Integer.parseInt(in.nextLine())==1){
