@@ -155,9 +155,15 @@ public class Game {
         while(current != players.last){
             if(((Player)(current.data)).completedSets.size() != 0){
                 canTrade = true;
+                if(!current.data.equals(player)){
                 tradePlayers.add((Player)(current.data));
+                }
             }
             current = current.nextLink;
+        }
+        if(tradePlayers.size() == 0){
+            System.out.println("There's no one to trade with!");
+            return;
         }
         if(canTrade){
             for(int i = 0; i < tradePlayers.size();i++){
@@ -168,7 +174,7 @@ public class Game {
 
             System.out.println ("Would you like to sell a property (0), buy a property (1), or trade property for other property (2)");
             int tradeType = Integer.parseInt(in.nextLine());
-            if(tradeType==0){
+            if(tradeType==0 && player.ownedProperties.size() > 0){
                 for(int i = 0; i < player.ownedProperties.size();i++){
                     System.out.println(i + ": "+player.ownedProperties.get(i).propertyName);
                 }
@@ -187,7 +193,7 @@ public class Game {
                 } else {
                     System.out.println("The trade has been declined.");
                 }
-            } else if (tradeType==1){
+            } else if (tradeType==1 && tradePlayer.ownedProperties.size() > 0){
                 for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
                     System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
                 }
@@ -207,7 +213,7 @@ public class Game {
                     System.out.println("The trade has been declined.");
                 }
 
-            } else if (tradeType==2){
+            } else if (tradeType==2 && player.getOwnedProperties().size() > 0 && tradePlayer.getOwnedProperties().size() > 0){
                 for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
                     System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
                 }
@@ -234,14 +240,16 @@ public class Game {
                 }
 
             }
-
+            else{
+                System.out.println("No trades possible.");
+            }
         } else {
             System.out.println("There aren't any bought properties to trade");
         }
     }
     public void upgrade(Player player){
         for(int i = 0; i < player.completedSets.size(); i++){
-            System.out.println( i +": "+ player.completedSets.get(0));
+            System.out.println( i +": "+ player.completedSets.get(i));
         }
         System.out.println("Which set would you like to upgrade? (use number printed in list):");
         BoardSpace.tileType upgradeSet = player.completedSets.get(Integer.parseInt(in.nextLine()));
