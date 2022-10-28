@@ -53,6 +53,18 @@ public class CircularLinkedList<T> {
         }
         System.out.println();
     }
+    public void deleteLink(T key){
+        int i = 0;
+        Link currentLink = first;
+        while(i < 2){
+            if(currentLink == first){i++;}
+            if(currentLink.nextLink.data == key){
+                currentLink.nextLink = currentLink.nextLink.nextLink;
+                break;
+            }
+            currentLink = currentLink.nextLink;
+        }
+    }
     public CircularLinkedList arrayToLinks(Object[] arr){
         CircularLinkedList list = new CircularLinkedList();
         for(int i = arr.length-1;i > -1;i--){
@@ -62,7 +74,7 @@ public class CircularLinkedList<T> {
     }
 
 /*
-ublic class SinglyLinkedList<T> {
+public class SinglyLinkedList<T> {
 
     public Link first;
 

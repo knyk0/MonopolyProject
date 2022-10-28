@@ -9,7 +9,8 @@ public class Player {
     ArrayList<BoardSpace> ownedProperties = new ArrayList<>();
     ArrayList<BoardSpace.tileType> completedSets = new ArrayList<>();
 
-    public Player(String name){
+    public Player(String name, CircularLinkedList list){
+        currentBoardSpace = (BoardSpace)(list.first.data);
         this.jailRolls = 0;
         this.name = name;
         money = 1500;
@@ -48,8 +49,12 @@ public class Player {
     public void addToCompletedSets(BoardSpace.tileType tileType){
         completedSets.add(tileType);
     }
-    public void addToOwnedProperties(){
-
+    public void addToOwnedProperties(Player player, BoardSpace property){
+        ownedProperties.add(property);
+        property.setOwner(player);
+    }
+    public ArrayList<BoardSpace> getOwnedProperties(){
+        return ownedProperties;
     }
     public void setCurrentBoardSpace(BoardSpace currentBoardSpace){
         this.currentBoardSpace = currentBoardSpace;
