@@ -193,7 +193,7 @@ public class Game {
         printBoard(currentPlayer);
         currentPlayer.parseForCompletedSets(currentPlayer,tiles);
         System.out.println(currentPlayer.getName()+", you are on "+currentBoardSpace.getPropertyName());
-        diceRoll();
+        boolean matchingDice = diceRoll();
         printBoard(currentPlayer);
         System.out.println("\u001B[31m"+currentPlayer.getName()+"\u001B[0m:");
         System.out.println("------------------------------------------------------");
@@ -214,12 +214,17 @@ public class Game {
             if(currentPlayer.getMoney() >= currentBoardSpace.getPayment()){
                 System.out.println("You paid "+currentBoardSpace.getPayment()+".");
                 currentPlayer.setMoney(currentPlayer.getMoney() - currentBoardSpace.getPayment());
+                currentBoardSpace.getOwner().setMoney(currentBoardSpace.getOwner().getMoney() + currentBoardSpace.getPayment());
             }
             else{
                 System.out.println("You can't afford to pay rent, you're out!");
                 currentPlayer.setMoney(0);
                 playerExit();
             }
+        }
+        if(matchingDice && currentPlayer.getMoney() > 0){
+            System.out.println("Double dice, you get another turn!");
+            turn(currentPlayer,currentPlayer.getCurrentBoardSpace());
         }
     }
     public boolean diceRoll(){
@@ -266,6 +271,7 @@ public class Game {
         else{ //If in jail
             if(matchingDiceRolls){ //If dice are matching
                 getOutOfJail(currentPlayer);
+                move(firstRoll);
             }
             else{ //If dice are not matching, remove one from jail rolls (no matter what, after 3 rolls the player will leave jail)
                 currentPlayer.setJailRolls(currentPlayer.getJailRolls()-1);
