@@ -12,10 +12,10 @@ public class Game {
 
     public Game(){
         tiles.insertFirst(new BoardSpace(400, 50,200,600,1400,1700,2000, 200,"Boardwalk", "BW", BoardSpace.tileType.Blue));
-        tiles.insertFirst(new BoardSpace(0, 0, 0,0,0,0,0,0,"Luxury Tax", "LT", BoardSpace.tileType.Utilities));
+        tiles.insertFirst(new BoardSpace(0, 75, 0,0,0,0,0,0,"Luxury Tax", "LT", BoardSpace.tileType.LuxuryTax));
         tiles.insertFirst(new BoardSpace(350, 35, 175,500,1100,1300,1500,200,"Park Place", "PP", BoardSpace.tileType.Blue));
         tiles.insertFirst(new BoardSpace(0, 0, 0,0,0,0,0,0,"Chance", "Ch", BoardSpace.tileType.Chance));
-        tiles.insertFirst(new BoardSpace(200, 0,0,0,0,0,0, 0,"Short Line", "SL", BoardSpace.tileType.Railroad));
+        tiles.insertFirst(new BoardSpace(200, 25,0,0,0,0,0, 0,"Short Line", "SL", BoardSpace.tileType.Railroad));
         tiles.insertFirst(new BoardSpace(320, 28, 150,450,1000,1200,1400,200,"Pennsylvania", "PA", BoardSpace.tileType.Green));
         tiles.insertFirst(new BoardSpace(0, 0, 0,0,0,0,0,0,"Community Chest", "CC", BoardSpace.tileType.CommunityChest));
         tiles.insertFirst(new BoardSpace(300, 26,130,390,900,1100,1275, 200,"North Carolina", "NC", BoardSpace.tileType.Green));
@@ -25,7 +25,7 @@ public class Game {
         tiles.insertFirst(new BoardSpace(150, 0,0,0,0,0,0,0, "Water Works", "WW", BoardSpace.tileType.Utilities));
         tiles.insertFirst(new BoardSpace(260, 22,110,330,800,975,1150, 150,"Ventnor Avenue", "Ve", BoardSpace.tileType.Yellow));
         tiles.insertFirst(new BoardSpace(260, 22,110,330,800,975,1150, 150,"Atlantic Avenue", "AA", BoardSpace.tileType.Yellow));
-        tiles.insertFirst(new BoardSpace(200, 0,0,0,0,0,0,0, "B&O Railroad", "BO", BoardSpace.tileType.Railroad));
+        tiles.insertFirst(new BoardSpace(200, 25,0,0,0,0,0,0, "B&O Railroad", "BO", BoardSpace.tileType.Railroad));
         tiles.insertFirst(new BoardSpace(240, 20,100,300,750,925,1100, 150,"Illinois Avenue", "Il", BoardSpace.tileType.Red));
         tiles.insertFirst(new BoardSpace(220, 18, 90,250,700,875,1050,150,"Indiana Avenue", "In", BoardSpace.tileType.Red));
         tiles.insertFirst(new BoardSpace(0, 0,0,0,0,0,0,0, "Chance", "Ch", BoardSpace.tileType.Chance));
@@ -35,7 +35,7 @@ public class Game {
         tiles.insertFirst(new BoardSpace(180, 14, 70,200,550,750,950,100,"Tennessee Avenue", "TA", BoardSpace.tileType.Orange));
         tiles.insertFirst(new BoardSpace(0, 0, 0,0,0,0,0,0,"Community Chest", "CC", BoardSpace.tileType.CommunityChest));
         tiles.insertFirst(new BoardSpace(180, 14, 70,200,550,750,950,100,"St James Place", "SJ", BoardSpace.tileType.Orange));
-        tiles.insertFirst(new BoardSpace(200, 0,0,0,0,0,0,0, "Pennsylvania Railroad", "PR", BoardSpace.tileType.Railroad));
+        tiles.insertFirst(new BoardSpace(200, 25,0,0,0,0,0,0, "Pennsylvania Railroad", "PR", BoardSpace.tileType.Railroad));
         tiles.insertFirst(new BoardSpace(160, 12, 60,180,500,700,900,100,"Virginia Avenue", "Vi", BoardSpace.tileType.Pink));
         tiles.insertFirst(new BoardSpace(140, 10, 50,150,450,625,750,100,"States Avenue", "SA", BoardSpace.tileType.Pink));
         tiles.insertFirst(new BoardSpace(150, 0,0,0,0,0,0,0, "Electric Company", "EC", BoardSpace.tileType.Utilities));
@@ -45,8 +45,8 @@ public class Game {
         tiles.insertFirst(new BoardSpace(100, 6, 30,90,270,400,550,50,"Vermont Avenue", "Ve", BoardSpace.tileType.lightBlue));
         tiles.insertFirst(new BoardSpace(0, 0,0,0,0,0,0,0, "Chance", "Ch", BoardSpace.tileType.Chance));
         tiles.insertFirst(new BoardSpace(100, 6,30,90,270,400,550, 50,"Oriental Avenue", "Or", BoardSpace.tileType.lightBlue));
-        tiles.insertFirst(new BoardSpace(200, 0,0,0,0,0,0,0, "Reading Railroad", "RR", BoardSpace.tileType.Railroad));
-        tiles.insertFirst(new BoardSpace(0, 0,0,0,0,0,0,0, "Income Tax", "IT", BoardSpace.tileType.IncomeTax));
+        tiles.insertFirst(new BoardSpace(200, 25,0,0,0,0,0,0, "Reading Railroad", "RR", BoardSpace.tileType.Railroad));
+        tiles.insertFirst(new BoardSpace(0, 200,0,0,0,0,0,0, "Income Tax", "IT", BoardSpace.tileType.IncomeTax));
         tiles.insertFirst(new BoardSpace(60, 4,20,60,180,320,450, 50,"Baltic Avenue", "BA", BoardSpace.tileType.Brown));
         tiles.insertFirst(new BoardSpace(0, 0,0,0,0,0,0,0, "Community Chest", "CC", BoardSpace.tileType.CommunityChest));
         tiles.insertFirst(new BoardSpace(60, 2,10,30,90,160,250, 50,"Mediterranean", "Me", BoardSpace.tileType.Brown));
@@ -158,10 +158,12 @@ public class Game {
         System.out.println("Which set would you like to upgrade? (use number printed in list):");
         BoardSpace.tileType upgradeSet = player.completedSets.get(Integer.parseInt(in.nextLine()));
         ArrayList<BoardSpace> setSpaces = new ArrayList<BoardSpace>();
+        Link current = tiles.first;
+        int n = 0;
         for(int i = 0; i < 40; i++){
-            Link current = tiles.first;
             if(((BoardSpace)(current.data)).thisTileType == upgradeSet){
-                System.out.println(i+": "+ ((BoardSpace)(current.data)).getPropertyName());
+                System.out.println(n+": "+ ((BoardSpace)(current.data)).getPropertyName());
+                n++;
                 setSpaces.add((BoardSpace)(current.data));
             }
             current = current.nextLink;
@@ -174,9 +176,8 @@ public class Game {
             System.out.println("You have paid "+ upgradeTile.getHotelPrice() +" to add a hotel to " + upgradeTile.propertyName);
             player.setMoney(player.getMoney()- upgradeTile.getHotelPrice());
             upgradeTile.setHouseLevel(upgradeTile.getHouseLevel()+1);
-        } else {
+        } else { //If below the threshold to become a hotel
             player.setMoney(player.getMoney()- upgradeTile.getHousePrice());
-            upgradeTile.setHouseLevel(upgradeTile.getHouseLevel()+1);
             if (upgradeTile.getHouseLevel()==3){
                 System.out.println("You have paid "+ upgradeTile.getHousePrice() +" to add your fourth house to " + upgradeTile.propertyName);
             }else if (upgradeTile.getHouseLevel()==2){
@@ -186,6 +187,7 @@ public class Game {
             }else if (upgradeTile.getHouseLevel()==0){
                 System.out.println("You have paid "+ upgradeTile.getHousePrice() +" to add your first house to " + upgradeTile.propertyName);
             }
+            upgradeTile.setHouseLevel(upgradeTile.getHouseLevel()+1); //Add to house Level
         }
     }
     public void turn(Player currentPlayer, BoardSpace currentBoardSpace){
@@ -204,6 +206,7 @@ public class Game {
         System.out.println("------------------------------------------------------");
         currentBoardSpace.printBoardSpaceAttributes();
         System.out.println("------------------------------------------------------");
+        currentPlayer.parseForCompletedSets(currentPlayer,tiles);
         if(currentBoardSpace.getOwner() == null && currentBoardSpace.getPrice() > 0){ //Buyable properties have a price, non-buyable properties do not
                 System.out.println("Buy for "+currentBoardSpace.getPrice()+"? (n:0, y:1)");
                 if(Integer.parseInt(in.nextLine())==1){
@@ -211,7 +214,10 @@ public class Game {
                 }
         }
         else if(currentBoardSpace.getOwner() != currentPlayer && currentBoardSpace.getPrice() > 0){
-            if(currentPlayer.getMoney() >= currentBoardSpace.getPayment()){
+            if(currentPlayer.getMoney() >= currentBoardSpace.getPayment() && (currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
+                payTax(currentPlayer, currentBoardSpace);
+            }
+            else if(currentPlayer.getMoney() >= currentBoardSpace.getPayment()){
                 System.out.println("You paid "+currentBoardSpace.getPayment()+".");
                 currentPlayer.setMoney(currentPlayer.getMoney() - currentBoardSpace.getPayment());
                 currentBoardSpace.getOwner().setMoney(currentBoardSpace.getOwner().getMoney() + currentBoardSpace.getPayment());
@@ -300,13 +306,10 @@ public class Game {
             }
         }
     }
-    public void payPayment(Player player, BoardSpace property){
-        if(property.getOwner() != null && property.getOwner() != player){
-
-        }
-    }
     public void payTax(Player player, BoardSpace property){
-
+        if(property.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || (property.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
+            player.setMoney(player.getMoney() - property.getPayment());
+        }
     }
     public void setCurrentPlayer(Player currentPlayer){
         this.currentPlayer = currentPlayer;

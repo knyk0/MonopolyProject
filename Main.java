@@ -39,6 +39,8 @@ public class Main {
         newGame.currentPlayer = (Player)(currentPlayerLink.data);
 
         while(gameOn){
+                newGame.currentPlayer.addToOwnedProperties(newGame.currentPlayer,newGame.index(1));
+            newGame.currentPlayer.addToOwnedProperties(newGame.currentPlayer,newGame.index(3));
                 newGame.currentPlayer = (Player)(currentPlayerLink.data);
                 newGame.turn(((Player)(currentPlayerLink.data)),((Player)(currentPlayerLink.data)).currentBoardSpace);
                 if(newGame.currentPlayer.getJailRolls() <= 0 && newGame.currentPlayer.getMoney() > 0){

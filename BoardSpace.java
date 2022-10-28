@@ -34,6 +34,7 @@ public class BoardSpace {
         this.propertyName = propertyName;
         this.printName = printName;
         this.thisTileType = thisTileType;
+        this.houseLevel = 0;
     }
     
     public void printBoardSpaceAttributes(){

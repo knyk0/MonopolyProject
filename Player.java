@@ -32,15 +32,37 @@ public class Player {
                 }
                 currentLink = currentLink.nextLink;
             }
+            boolean preExisting = false;
             if((type == 4 || type == 6 || type == 8) && setNum == 2){
-                owner.addToCompletedSets(sets[type]);
+                for(int i = 0;i < owner.getCompletedSets().size();i++){
+                    if(owner.getCompletedSets().contains(sets[type])){
+                        preExisting = true;
+                    }
+                }
+                if(!preExisting){
+                    owner.addToCompletedSets(sets[type]);
+                }
             }
             else if(type == 9 && setNum == 4){
-                owner.addToCompletedSets(sets[type]);
+                for(int i = 0;i < owner.getCompletedSets().size();i++){
+                    if(owner.getCompletedSets().contains(sets[type])){
+                        preExisting = true;
+                    }
+                }
+                if(!preExisting){
+                    owner.addToCompletedSets(sets[type]);
+                }
             }
             else{
                 if(setNum == 3){
-                    owner.addToCompletedSets(sets[type]);
+                    for(int i = 0;i < owner.getCompletedSets().size();i++){
+                        if(owner.getCompletedSets().contains(sets[type])){
+                            preExisting = true;
+                        }
+                    }
+                    if(!preExisting){
+                        owner.addToCompletedSets(sets[type]);
+                    }
                 }
             }
         }
