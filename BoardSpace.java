@@ -6,6 +6,11 @@ public class BoardSpace {
     ArrayList<Player> currentPlayersOnTile = new ArrayList<>();
     int price;
     int payment;
+    int pay1;
+    int pay2;
+    int pay3;
+    int pay4;
+    int payH;
     int housePrice;
     int hotelPrice;
     String propertyName;
@@ -16,15 +21,21 @@ public class BoardSpace {
     public enum tileType{Chance, CommunityChest, Railroad, FreeParking, Jail, GoToJail, Go, LuxuryTax, IncomeTax, Utilities, Red, Orange, Yellow, Green, Blue, lightBlue, Brown, Pink}
                             //0         1           2           3        4        5      6      7           8         9       10     11      12     13    14        15      16    17
 
-    public BoardSpace(int price, int payment, int housePrice, int hotelPrice, String propertyName, String printName, tileType thisTileType){
+    public BoardSpace(int price, int payment, int pay1, int pay2, int pay3, int pay4, int payH, int housePrice, String propertyName, String printName, tileType thisTileType){
         this.price = price;
         this.payment = payment;
+        this.pay1 = pay1;
+        this.pay2 = pay2;
+        this.pay3 = pay3;
+        this.pay4 = pay4;
+        this.payH = payH;
         this.housePrice = housePrice;
-        this.hotelPrice = hotelPrice;
+        this.hotelPrice = housePrice;
         this.propertyName = propertyName;
         this.printName = printName;
         this.thisTileType = thisTileType;
     }
+    
     public void printBoardSpaceAttributes(){
         if(owner != null){System.out.println("Owner: "+owner.getName());}
         System.out.print("Players on this tile: ");
