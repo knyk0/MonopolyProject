@@ -148,7 +148,7 @@ public class Game {
         System.out.println("\t|");
         System.out.println("    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
     }
-    public void trade(){
+    public void trade(Player player){
         Link current = players.first;
         boolean canTrade = false;
         ArrayList<Player> tradePlayers = new ArrayList<Player>();
