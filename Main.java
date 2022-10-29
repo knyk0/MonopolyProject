@@ -5,7 +5,7 @@ public class Main {
 
         Game newGame = new Game();
         Scanner in = new Scanner(System.in);
-
+        System.out.println("Note: Red Text on Board = Your location, Green Square on Board = Property you Own\n");
         System.out.println("Please enter the name of your first player:");
         Player player1 = new Player(in.nextLine(),newGame.tiles);
         newGame.players.insertFirst(player1);
@@ -39,11 +39,6 @@ public class Main {
         boolean gameOn = true;
         Link currentPlayerLink = newGame.players.first;
         newGame.currentPlayer = (Player)(currentPlayerLink.data);
-        newGame.currentPlayer.addToOwnedProperties(newGame.currentPlayer,newGame.index(1));
-        newGame.currentPlayer.addToOwnedProperties(newGame.currentPlayer,newGame.index(3));
-        newGame.currentPlayer.addToOwnedProperties(newGame.currentPlayer,newGame.index(6));
-        newGame.currentPlayer.addToOwnedProperties(newGame.currentPlayer,newGame.index(8));
-        newGame.currentPlayer.addToOwnedProperties(newGame.currentPlayer,newGame.index(9));
 
         while(gameOn){
 

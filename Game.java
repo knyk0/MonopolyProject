@@ -22,7 +22,7 @@ public class Game {
         tiles.insertFirst(new BoardSpace(300, 26,130,390,900,1100,1275, 200,"Pacific", "PC", BoardSpace.tileType.Green));
         tiles.insertFirst(new BoardSpace(0, 0,0, 0,0,0,0, 0,"Go To Jail", "TJ", BoardSpace.tileType.GoToJail));
         tiles.insertFirst(new BoardSpace(280, 24, 120,360,850,1025,1200,150,"Marvin Gardens", "MG", BoardSpace.tileType.Yellow));
-        tiles.insertFirst(new BoardSpace(150, 0,0,0,0,0,0,0, "Water Works", "WW", BoardSpace.tileType.Utilities));
+        tiles.insertFirst(new BoardSpace(150, 10,0,0,0,0,0,0, "Water Works", "WW", BoardSpace.tileType.Utilities));
         tiles.insertFirst(new BoardSpace(260, 22,110,330,800,975,1150, 150,"Ventnor Avenue", "Ve", BoardSpace.tileType.Yellow));
         tiles.insertFirst(new BoardSpace(260, 22,110,330,800,975,1150, 150,"Atlantic Avenue", "AA", BoardSpace.tileType.Yellow));
         tiles.insertFirst(new BoardSpace(200, 25,0,0,0,0,0,0, "B&O Railroad", "BO", BoardSpace.tileType.Railroad));
@@ -38,7 +38,7 @@ public class Game {
         tiles.insertFirst(new BoardSpace(200, 25,0,0,0,0,0,0, "Pennsylvania Railroad", "PR", BoardSpace.tileType.Railroad));
         tiles.insertFirst(new BoardSpace(160, 12, 60,180,500,700,900,100,"Virginia Avenue", "Vi", BoardSpace.tileType.Pink));
         tiles.insertFirst(new BoardSpace(140, 10, 50,150,450,625,750,100,"States Avenue", "SA", BoardSpace.tileType.Pink));
-        tiles.insertFirst(new BoardSpace(150, 0,0,0,0,0,0,0, "Electric Company", "EC", BoardSpace.tileType.Utilities));
+        tiles.insertFirst(new BoardSpace(150, 10,0,0,0,0,0,0, "Electric Company", "EC", BoardSpace.tileType.Utilities));
         tiles.insertFirst(new BoardSpace(140, 10,50,150,450,625,750, 100,"St. Charles Place", "SC", BoardSpace.tileType.Pink));
         tiles.insertFirst(new BoardSpace(0, 0,0,0,0,0,0,0, "Jail", "Jl", BoardSpace.tileType.Jail));
         tiles.insertFirst(new BoardSpace(120, 40,100,300,450,600,8, 50,"Connecticut Avenue", "CA", BoardSpace.tileType.lightBlue));
@@ -149,32 +149,40 @@ public class Game {
         System.out.println("    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
     }
     public void trade(Player player){
-         Link current = players.first;
+        int n = 0;
+        Link current = players.first;
+        boolean someoneHasProperties = false;
         boolean canTrade = false;
         ArrayList<Player> tradePlayers = new ArrayList<Player>();
-        if(((Player)(current.data)).ownedProperties.size() != 0){
-            canTrade = true;
-            tradePlayers.add((Player)(current.data));
-        }
-        current = current.nextLink;
-        while(current != players.first){
+        while(n < 2){
+            if(current == players.first){
+                n++;
+                if(n == 2){
+                    break;
+                }
+            }
             if(((Player)(current.data)).ownedProperties.size() != 0){
+                someoneHasProperties = true;
+            }
+            if(someoneHasProperties && !current.data.equals(player)){
                 canTrade = true;
                 tradePlayers.add((Player)(current.data));
             }
             current = current.nextLink;
         }
-        tradePlayers.remove(player);
-        if(canTrade && tradePlayers.size()>0){
+        if(tradePlayers.size() == 1 && tradePlayers.get(0).equals(player)){
+            System.out.println("There's no one to trade with!");
+            return;
+        }
+        if(canTrade){
             for(int i = 0; i < tradePlayers.size();i++){
                 System.out.println(i + ": "+ tradePlayers.get(i).getName());
             }
             System.out.println("Who would you like to trade with (enter number)");
             Player tradePlayer = tradePlayers.get(Integer.parseInt(in.nextLine()));
-
             System.out.println ("Would you like to sell a property (0), buy a property (1), or trade property for other property (2)");
             int tradeType = Integer.parseInt(in.nextLine());
-            if(tradeType==0){
+            if(tradeType==0 && player.ownedProperties.size() > 0){
                 for(int i = 0; i < player.ownedProperties.size();i++){
                     System.out.println(i + ": "+player.ownedProperties.get(i).propertyName);
                 }
@@ -193,7 +201,7 @@ public class Game {
                 } else {
                     System.out.println("The trade has been declined.");
                 }
-            } else if (tradeType==1){
+            } else if (tradeType==1 && tradePlayer.ownedProperties.size() > 0){
                 for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
                     System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
                 }
@@ -213,7 +221,7 @@ public class Game {
                     System.out.println("The trade has been declined.");
                 }
 
-            } else if (tradeType==2){
+            } else if (tradeType==2 && tradePlayer.ownedProperties.size() > 0 && player.ownedProperties.size() > 0){
                 for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
                     System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
                 }
@@ -240,17 +248,32 @@ public class Game {
                 }
 
             }
+            else{
+                System.out.println("No trades are possible.");
+            }
 
         } else {
             System.out.println("There aren't any bought properties to trade");
         }
     }
     public void upgrade(Player player){
+        ArrayList<BoardSpace.tileType> upgradableSets = new ArrayList<>();
         for(int i = 0; i < player.completedSets.size(); i++){
-            System.out.println( i +": "+ player.completedSets.get(0));
+            if(player.completedSets.get(i).equals(BoardSpace.tileType.Railroad) || player.completedSets.get(i).equals(BoardSpace.tileType.Utilities)){
+                //Nothing
+            }
+            else{
+                upgradableSets.add(player.completedSets.get(i));
+            }
+        }
+        if(upgradableSets.size() == 0){
+            return;
+        }
+        for(int i = 0; i < upgradableSets.size(); i++){
+                System.out.println(i + ": " + upgradableSets.get(i));
         }
         System.out.println("Which set would you like to upgrade? (use number printed in list):");
-        BoardSpace.tileType upgradeSet = player.completedSets.get(Integer.parseInt(in.nextLine()));
+        BoardSpace.tileType upgradeSet = upgradableSets.get(Integer.parseInt(in.nextLine()));
         ArrayList<BoardSpace> setSpaces = new ArrayList<BoardSpace>();
         Link current = tiles.first;
         int n = 0;
@@ -264,6 +287,7 @@ public class Game {
         }
         System.out.println("Which property would you like to upgrade? (use number printed in list): ");
         BoardSpace upgradeTile = setSpaces.get(Integer.parseInt(in.nextLine()));
+
         if(upgradeTile.getHouseLevel()== 5){
             System.out.println("This property is already maxed out with a hotel.");
         } else if (upgradeTile.getHouseLevel()==4){
@@ -286,6 +310,20 @@ public class Game {
     }
     public void turn(Player currentPlayer, BoardSpace currentBoardSpace){
         Scanner in = new Scanner(System.in);
+        Link current = players.first;
+        for(int i = 0; i < 2;){
+            if(current == players.first){
+                i++;
+            }
+            if(((Player)(current.data)).getMoney() <= 0){
+                playerExit(((Player)(current.data)));
+            }
+            current = current.nextLink;
+        }
+        if(players.first.nextLink.equals(players.first)){
+            System.out.println(((Player)(players.first.data)).getName()+" has won!");
+            System.exit(0);
+        }
         printBoard(currentPlayer);
         currentPlayer.parseForCompletedSets(currentPlayer,tiles);
         System.out.println(currentPlayer.getName()+", you are on "+currentBoardSpace.getPropertyName());
@@ -308,10 +346,7 @@ public class Game {
                 }
         }
         else if(currentBoardSpace.getOwner() != currentPlayer && currentBoardSpace.getPrice() > 0){
-            if(currentPlayer.getMoney() >= currentBoardSpace.getPayment() && (currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
-                payTax(currentPlayer, currentBoardSpace);
-            }
-            else if(currentPlayer.getMoney() >= currentBoardSpace.getPayment()){
+            if(currentPlayer.getMoney() >= currentBoardSpace.getPayment()){
                 System.out.println("You paid "+currentBoardSpace.getPayment()+".");
                 currentPlayer.setMoney(currentPlayer.getMoney() - currentBoardSpace.getPayment());
                 currentBoardSpace.getOwner().setMoney(currentBoardSpace.getOwner().getMoney() + currentBoardSpace.getPayment());
@@ -319,8 +354,17 @@ public class Game {
             else{
                 System.out.println("You can't afford to pay rent, you're out!");
                 currentPlayer.setMoney(0);
-                playerExit();
+                playerExit(currentPlayer);
             }
+        }
+        if(currentPlayer.getMoney() >= currentBoardSpace.getPayment() && (currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
+            System.out.println("There's a tax, you paid "+currentBoardSpace.getPayment()+".");
+            payTax(currentPlayer, currentBoardSpace);
+        }
+        else if(currentPlayer.getMoney() < currentBoardSpace.getPayment() && (currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
+            System.out.println("You can't afford to pay the tax, you're out!");
+            currentPlayer.setMoney(0);
+            playerExit(currentPlayer);
         }
         if(matchingDice && currentPlayer.getMoney() > 0){
             System.out.println("Double dice, you get another turn!");
@@ -425,12 +469,12 @@ public class Game {
         player.setJailRolls(0);
         player.getCurrentBoardSpace().removePlayer(player);
     }
-    public void playerExit(){
-        System.out.println(currentPlayer.getName()+" has gone bankrupt!");
-        players.deleteLink(currentPlayer);
+    public void playerExit(Player player){
+        System.out.println(player.getName()+" has gone bankrupt!");
+        players.deleteLink(player);
         Link current = tiles.first;
         for(int i = 0; i < 40; i++){
-            if(((BoardSpace)(current.data)).getOwner() == currentPlayer){
+            if(((BoardSpace)(current.data)).getOwner() == player){
                 ((BoardSpace)(current.data)).setOwner(null);
             }
             current = current.nextLink;
