@@ -349,7 +349,7 @@ public class Game {
                 payTax(currentPlayer, currentBoardSpace);
             } else {
                 int respectivePayment;
-                if(currentBoardSpace.houseLevel == 5){ respectivePayment = currentBoardSpace.payH; }
+                if(currentBoardSpace.houseLevel == 5){ respectivePayment = currentBoardSpace.payH; } //Payment scaling with respective house level
                 else if (currentBoardSpace.houseLevel == 4){ respectivePayment = currentBoardSpace.pay4; }
                 else if (currentBoardSpace.houseLevel == 3){ respectivePayment = currentBoardSpace.pay3; }
                 else if (currentBoardSpace.houseLevel == 2){ respectivePayment = currentBoardSpace.pay2; }
@@ -454,10 +454,8 @@ public class Game {
             }
         }
     }
-    public void payTax(Player player, BoardSpace property){ //Pays income / luxury tax
-        if(property.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || (property.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
-            player.setMoney(player.getMoney() - property.getPayment());
-        }
+    public void payTax(Player player, BoardSpace property){ //Pays tax
+        player.setMoney(player.getMoney() - property.getPayment());
     }
     public void goToJail(Player player){ //Sends player to jail
         player.setJailRolls(3);
