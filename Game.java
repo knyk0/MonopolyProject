@@ -10,7 +10,7 @@ public class Game {
     Scanner in = new Scanner(System.in);
 
 
-    public Game(){
+    public Game(){                //nora
         tiles.insertFirst(new BoardSpace(400, 50,200,600,1400,1700,2000, 200,"Boardwalk", "BW", BoardSpace.tileType.Blue));
         tiles.insertFirst(new BoardSpace(0, 75, 0,0,0,0,0,0,"Luxury Tax", "LT", BoardSpace.tileType.LuxuryTax));
         tiles.insertFirst(new BoardSpace(350, 35, 175,500,1100,1300,1500,200,"Park Place", "PP", BoardSpace.tileType.Blue));
@@ -53,20 +53,20 @@ public class Game {
         tiles.insertFirst(new BoardSpace(0, 0,0,0,0,0,0,0, "Go", "Go", BoardSpace.tileType.Go));
     }
 
-    public void printListOfBoard(){                  //for testing if the loop with board works
+    public void printListOfBoard(){               //nora   //for testing if the loop with board works, not in final game
         Link current = tiles.first;
         for(int i = 0; i<40; i++){
-         System.out.print(((BoardSpace)(current.data)).printName + ", ");
-         current = current.nextLink;
+            System.out.print(((BoardSpace)(current.data)).printName + ", ");
+            current = current.nextLink;
         }
     }
-    public void printBoard(Player currentPlayer){
+    public void printBoard(Player currentPlayer){       //nora/nico
         String owned = "";
         String owned2 = "";
-          System.out.print("\n");
+        System.out.print("\n");
         Link current = tiles.first;
         System.out.println("    _________________________________________________________________________________________");
-        for(int i = 0; i <11; i++){
+        for(int i = 0; i <11; i++){         //top row (loop through forwards with first 11 board spaces)
             if(currentPlayer.getCurrentBoardSpace() == (current.data)){
                 if(((BoardSpace)(current.data)).getOwner() != null && ((BoardSpace)(current.data)).getOwner().equals(currentPlayer)){
                     owned = "\u001B[42m";
@@ -84,10 +84,10 @@ public class Game {
             current = current.nextLink;
         }
         System.out.print("\t|\n");
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < 9; i++){        //middle 9 rows
             Link current2 = current;
-            for(int j = 1; j < 29 -2*i; j++){
-                current2 = current2.nextLink;
+            for(int j = 1; j < 29 -2*i; j++){       //algorithm to find what the left side tile will be based on the right side,
+                current2 = current2.nextLink;       //and be able to loop over to it (current2 is the left side one)
             }
             if(currentPlayer.getCurrentBoardSpace() == (current.data)){
                 if(((BoardSpace)(current.data)).getOwner() != null && ((BoardSpace)(current.data)).getOwner().equals(currentPlayer)){
@@ -125,8 +125,8 @@ public class Game {
             current = current.nextLink;
             System.out.print("\n");
         }
-        for(int i = 11; i > 0; i--){
-            Link current3 = current;
+        for(int i = 11; i > 0; i--){       //last row loop (since it is going "backwards" through the loop, going down from 11 with
+            Link current3 = current;        //however many more than the current space it is
             for(int k = 1; k < i; k++){
                 current3 = current3.nextLink;
             }
@@ -148,16 +148,16 @@ public class Game {
         System.out.println("\t|");
         System.out.println("    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
     }
-    public void trade(Player player){
+    public void trade(Player player){//nora
         int n = 0;
         Link current = players.first;
-        boolean someoneHasProperties = false;
-        boolean canTrade = false;
-        ArrayList<Player> tradePlayers = new ArrayList<Player>();
+        boolean someoneHasProperties = false;//players you can trade with
+        boolean canTrade = false;//(must have properties)
+        ArrayList<Player> tradePlayers = new ArrayList<Player>();//doing one iteration so next loop can stop at first
         while(n < 2){
             if(current == players.first){
                 n++;
-                if(n == 2){
+                if(n == 2){//then this loop of same thing which can stop at first link
                     break;
                 }
             }
@@ -171,27 +171,28 @@ public class Game {
             current = current.nextLink;
         }
         if(tradePlayers.size() == 1 && tradePlayers.get(0).equals(player)){
-            System.out.println("There's no one to trade with!");
+            System.out.println("There's no one to trade with!");//must have been able to trade and still have a player to trade with after removing itself
             return;
         }
-        if(canTrade){
+        if(canTrade){//must have been able to trade and still have a player to trade with after removing itself
             for(int i = 0; i < tradePlayers.size();i++){
-                System.out.println(i + ": "+ tradePlayers.get(i).getName());
+                System.out.println(i + ": "+ tradePlayers.get(i).getName());//looping through the players for printing list
             }
             System.out.println("Who would you like to trade with (enter number)");
-            Player tradePlayer = tradePlayers.get(Integer.parseInt(in.nextLine()));
+            Player tradePlayer = tradePlayers.get(Integer.parseInt(in.nextLine()));   //variable for the player you're trading with
+
             System.out.println ("Would you like to sell a property (0), buy a property (1), or trade property for other property (2)");
-            int tradeType = Integer.parseInt(in.nextLine());
-            if(tradeType==0 && player.ownedProperties.size() > 0){
-                for(int i = 0; i < player.ownedProperties.size();i++){
+            int tradeType = Integer.parseInt(in.nextLine());            //making a trade type based on what they want to do
+            if(tradeType==0 && player.ownedProperties.size() > 0){           //selling
+                for(int i = 0; i < player.ownedProperties.size();i++){      //looping through properties to print so they can choose
                     System.out.println(i + ": "+player.ownedProperties.get(i).propertyName);
                 }
                 System.out.println("Which of your properties would you like to sell " + tradePlayer.name + "? (Enter number from list)");
-                BoardSpace sellSpace = player.ownedProperties.get(Integer.parseInt(in.nextLine()));
+                BoardSpace sellSpace = player.ownedProperties.get(Integer.parseInt(in.nextLine()));  //variable sellSpace for the boardSpace they want to sell
                 System.out.println("How much money would you like them to pay?");
-                int sellMoney = Integer.parseInt(in.nextLine());
+                int sellMoney = Integer.parseInt(in.nextLine());            //variable sellMoney for the money they want to sell it for
                 System.out.println("\u001B[31m" +  tradePlayer.name +"\u001B[0m, would you like to accept the trade of " + sellSpace.propertyName + " for " + sellMoney + " Dollars? (No:0, Yes:1)");
-                if(Integer.parseInt(in.nextLine()) == 1){
+                if(Integer.parseInt(in.nextLine()) == 1){   //if other player agrees, do everything to swap
                     System.out.println(player.name +" has given " + tradePlayer.name + " " + sellSpace.propertyName + " for " + sellMoney + " dollars.");
                     tradePlayer.setMoney(tradePlayer.getMoney()-sellMoney);
                     player.setMoney(player.getMoney()+sellMoney);
@@ -201,16 +202,16 @@ public class Game {
                 } else {
                     System.out.println("The trade has been declined.");
                 }
-            } else if (tradeType==1 && tradePlayer.ownedProperties.size() > 0){
-                for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
+            } else if (tradeType==1 && tradePlayer.ownedProperties.size() > 0){//buying
+                for(int i = 0; i < tradePlayer.ownedProperties.size();i++){//looping through to print properties for them to choose
                     System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
                 }
                 System.out.println("Which property would you like to buy from " + tradePlayer.name + "? (Enter number from list)");
-                BoardSpace buySpace = tradePlayer.ownedProperties.get(Integer.parseInt(in.nextLine()));
+                BoardSpace buySpace = tradePlayer.ownedProperties.get(Integer.parseInt(in.nextLine()));    //space they are buying
                 System.out.println("How much money would you like to propose to pay?");
-                int buyMoney = Integer.parseInt(in.nextLine());
+                int buyMoney = Integer.parseInt(in.nextLine());                                       //money buying it for
                 System.out.println("\u001B[31m" +  tradePlayer.name +"\u001B[0m, would you like to accept the trade of " + buySpace.propertyName + " for " + buyMoney + " Dollars? (No:0, Yes:1)");
-                if(Integer.parseInt(in.nextLine()) == 1){
+                if(Integer.parseInt(in.nextLine()) == 1){      //if accepted, everything done to swap
                     System.out.println(tradePlayer.name +" has given " + player.name + " " + buySpace.propertyName + " for " + buyMoney + " dollars.");
                     tradePlayer.setMoney(tradePlayer.getMoney()+buyMoney);
                     player.setMoney(player.getMoney()-buyMoney);
@@ -221,21 +222,21 @@ public class Game {
                     System.out.println("The trade has been declined.");
                 }
 
-            } else if (tradeType==2 && tradePlayer.ownedProperties.size() > 0 && player.ownedProperties.size() > 0){
+            } else if (tradeType==2 && tradePlayer.ownedProperties.size() > 0 && player.ownedProperties.size() > 0){//trading one property for another
                 for(int i = 0; i < tradePlayer.ownedProperties.size();i++){
                     System.out.println(i + ": "+tradePlayer.ownedProperties.get(i).propertyName);
                 }
                 System.out.println("Which property would you like to get from " + tradePlayer.name + "? (Enter number from list)");
-                BoardSpace buySpace = tradePlayer.ownedProperties.get(Integer.parseInt(in.nextLine()));
+                BoardSpace buySpace = tradePlayer.ownedProperties.get(Integer.parseInt(in.nextLine()));   //property you're getting from the other person
 
                 for(int i = 0; i < player.ownedProperties.size();i++){
                     System.out.println(i + ": "+player.ownedProperties.get(i).propertyName);
                 }
                 System.out.println("Which of your properties would you like to give to " + tradePlayer.name + "? (Enter number from list)");
-                BoardSpace sellSpace = player.ownedProperties.get(Integer.parseInt(in.nextLine()));
+                BoardSpace sellSpace = player.ownedProperties.get(Integer.parseInt(in.nextLine()));       //property you're giving up
 
                 System.out.println("\u001B[31m" +  tradePlayer.name +"\u001B[0m, would you like to accept the trade of " + buySpace.propertyName + " for " + sellSpace.propertyName + "? (No:0, Yes:1)");
-                if(Integer.parseInt(in.nextLine()) == 1){
+                if(Integer.parseInt(in.nextLine()) == 1){               //if accepted, everything swapped
                     System.out.println(tradePlayer.name +" has given " + player.name + " " + buySpace.propertyName + " for " + sellSpace.propertyName + ".");
                     player.ownedProperties.add(buySpace);
                     tradePlayer.ownedProperties.remove(buySpace);
@@ -246,7 +247,6 @@ public class Game {
                 } else {
                     System.out.println("The trade has been declined.");
                 }
-
             }
             else{
                 System.out.println("No trades are possible.");
@@ -256,9 +256,9 @@ public class Game {
             System.out.println("There aren't any bought properties to trade");
         }
     }
-    public void upgrade(Player player){
+    public void upgrade(Player player){//nora
         ArrayList<BoardSpace.tileType> upgradableSets = new ArrayList<>();
-        for(int i = 0; i < player.completedSets.size(); i++){
+        for(int i = 0; i < player.completedSets.size(); i++){ //first looping through, printing, and asking for which set to upgrade (because must be completed set)
             if(player.completedSets.get(i).equals(BoardSpace.tileType.Railroad) || player.completedSets.get(i).equals(BoardSpace.tileType.Utilities)){
                 //Nothing
             }
@@ -277,7 +277,7 @@ public class Game {
         ArrayList<BoardSpace> setSpaces = new ArrayList<BoardSpace>();
         Link current = tiles.first;
         int n = 0;
-        for(int i = 0; i < 40; i++){
+        for(int i = 0; i < 40; i++){        //getting the spaces from board that have the type
             if(((BoardSpace)(current.data)).thisTileType == upgradeSet){
                 System.out.println(n+": "+ ((BoardSpace)(current.data)).getPropertyName());
                 n++;
@@ -285,10 +285,9 @@ public class Game {
             }
             current = current.nextLink;
         }
-        System.out.println("Which property would you like to upgrade? (use number printed in list): ");
+        System.out.println("Which property would you like to upgrade? (use number printed in list): ");   //which specific property
         BoardSpace upgradeTile = setSpaces.get(Integer.parseInt(in.nextLine()));
-
-        if(upgradeTile.getHouseLevel()== 5){
+        if(upgradeTile.getHouseLevel()== 5){            //based on the house level already (5 already has hotel, 0 is putting first house on)
             System.out.println("This property is already maxed out with a hotel.");
         } else if (upgradeTile.getHouseLevel()==4){
             System.out.println("You have paid "+ upgradeTile.getHotelPrice() +" to add a hotel to " + upgradeTile.propertyName);
@@ -308,7 +307,7 @@ public class Game {
             upgradeTile.setHouseLevel(upgradeTile.getHouseLevel()+1); //Add to house Level
         }
     }
-    public void turn(Player currentPlayer, BoardSpace currentBoardSpace){
+    public void turn(Player currentPlayer, BoardSpace currentBoardSpace){     //nico
         Scanner in = new Scanner(System.in);
         Link current = players.first;
         for(int i = 0; i < 2;){
@@ -340,21 +339,32 @@ public class Game {
         System.out.println("------------------------------------------------------");
         currentPlayer.parseForCompletedSets(currentPlayer,tiles);
         if(currentBoardSpace.getOwner() == null && currentBoardSpace.getPrice() > 0){ //Buyable properties have a price, non-buyable properties do not
-                System.out.println("Buy for "+currentBoardSpace.getPrice()+"? (n:0, y:1)");
-                if(Integer.parseInt(in.nextLine())==1){
-                    buyProperty(currentPlayer, currentBoardSpace);
-                }
+            System.out.println("Buy for "+currentBoardSpace.getPrice()+"? (n:0, y:1)");
+            if(Integer.parseInt(in.nextLine())==1){
+                buyProperty(currentPlayer, currentBoardSpace);
+            }
         }
         else if(currentBoardSpace.getOwner() != currentPlayer && currentBoardSpace.getPrice() > 0){
-            if(currentPlayer.getMoney() >= currentBoardSpace.getPayment()){
-                System.out.println("You paid "+currentBoardSpace.getPayment()+".");
-                currentPlayer.setMoney(currentPlayer.getMoney() - currentBoardSpace.getPayment());
-                currentBoardSpace.getOwner().setMoney(currentBoardSpace.getOwner().getMoney() + currentBoardSpace.getPayment());
-            }
-            else{
-                System.out.println("You can't afford to pay rent, you're out!");
-                currentPlayer.setMoney(0);
-                playerExit(currentPlayer);
+            if(currentPlayer.getMoney() >= currentBoardSpace.getPayment() && (currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
+                payTax(currentPlayer, currentBoardSpace);
+            } else {
+                int respectivePayment;
+                if(currentBoardSpace.houseLevel == 5){ respectivePayment = currentBoardSpace.payH; }
+                else if (currentBoardSpace.houseLevel == 4){ respectivePayment = currentBoardSpace.pay4; }
+                else if (currentBoardSpace.houseLevel == 3){ respectivePayment = currentBoardSpace.pay3; }
+                else if (currentBoardSpace.houseLevel == 2){ respectivePayment = currentBoardSpace.pay2; }
+                else if (currentBoardSpace.houseLevel == 1){ respectivePayment = currentBoardSpace.pay1; }
+                else { respectivePayment = currentBoardSpace.payment; }
+                if(currentPlayer.getMoney() >= respectivePayment){
+                    System.out.println("You paid "+respectivePayment+".");
+                    currentPlayer.setMoney(currentPlayer.getMoney() - respectivePayment);
+                    currentBoardSpace.getOwner().setMoney(currentBoardSpace.getOwner().getMoney() + respectivePayment);
+                }
+                else{
+                    System.out.println("You can't afford to pay rent, you're out!");
+                    currentPlayer.setMoney(0);
+                    playerExit(currentPlayer);
+                }
             }
         }
         if(currentPlayer.getMoney() >= currentBoardSpace.getPayment() && (currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || currentBoardSpace.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
@@ -371,7 +381,7 @@ public class Game {
             turn(currentPlayer,currentPlayer.getCurrentBoardSpace());
         }
     }
-    public boolean diceRoll(){
+    public boolean diceRoll(){         //nico
         boolean matchingDiceRolls = false;
         int firstRoll = 0;
         int combinedRoll = 0;
@@ -423,7 +433,7 @@ public class Game {
         }
         return matchingDiceRolls;
     }
-    public void move(int spaces){
+    public void move(int spaces){        //nico
         currentPlayer.getCurrentBoardSpace().removePlayer(currentPlayer);//Remove player from space
         Link currentLink = tiles.findLink(currentPlayer.getCurrentBoardSpace());
         for(int i = 0; i < spaces; i++){
@@ -432,7 +442,7 @@ public class Game {
         currentPlayer.setCurrentBoardSpace((BoardSpace)(currentLink.data));//Player's current space updated
         ((BoardSpace)(currentLink.data)).addToCurrentPlayers(currentPlayer);//New space contains player
     }
-    public void buyProperty(Player player, BoardSpace property){
+    public void buyProperty(Player player, BoardSpace property){       //nico
         if(property.getOwner() == null && property.getPrice() > 0){
             if(player.getMoney() >= property.getPrice()){
                 player.setMoney(player.getMoney() - property.getPrice());
