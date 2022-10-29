@@ -454,31 +454,32 @@ public class Game {
             }
         }
     }
-    public void payTax(Player player, BoardSpace property){
+    public void payTax(Player player, BoardSpace property){ //Pays income / luxury tax
         if(property.getThisTileType().equals(BoardSpace.tileType.IncomeTax) || (property.getThisTileType().equals(BoardSpace.tileType.LuxuryTax))){
             player.setMoney(player.getMoney() - property.getPayment());
         }
     }
-    public void goToJail(Player player){
+    public void goToJail(Player player){ //Sends player to jail
         player.setJailRolls(3);
         player.getCurrentBoardSpace().removePlayer(player);
         player.setCurrentBoardSpace(index(10));
         index(10).addToCurrentPlayers(player);
     }
-    public BoardSpace index(int n){
+    public BoardSpace index(int n){ //Index function to find specific spot on the board
         Link currentLink = tiles.first;
         for(int i = 0;i < n;i++){
             currentLink = currentLink.nextLink;
         }
         return (BoardSpace)(currentLink.data);
     }
-    public void getOutOfJail(Player player){
+    public void getOutOfJail(Player player){ //Takes player out of jail
         player.setJailRolls(0);
         player.getCurrentBoardSpace().removePlayer(player);
     }
-    public void playerExit(Player player){
+    public void playerExit(Player player){ //Removes player from the game along with their properties
         System.out.println(player.getName()+" has gone bankrupt!");
         players.deleteLink(player);
+        player.getCurrentBoardSpace().removePlayer(player);
         Link current = tiles.first;
         for(int i = 0; i < 40; i++){
             if(((BoardSpace)(current.data)).getOwner() == player){
