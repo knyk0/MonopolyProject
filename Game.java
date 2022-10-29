@@ -459,9 +459,6 @@ public class Game {
             player.setMoney(player.getMoney() - property.getPayment());
         }
     }
-    public void setCurrentPlayer(Player currentPlayer){
-        this.currentPlayer = currentPlayer;
-    }
     public void goToJail(Player player){
         player.setJailRolls(3);
         player.getCurrentBoardSpace().removePlayer(player);

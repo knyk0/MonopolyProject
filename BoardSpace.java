@@ -80,9 +80,6 @@ public class BoardSpace {
     public void setPayment(int payment){
         this.payment = payment;
     }
-    public String getPrintName() {
-        return printName;
-    }
 
     public int getPrice() {
         return price;

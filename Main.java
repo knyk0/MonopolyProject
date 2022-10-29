@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        // Upgrade and Trade was our extra functionality
         Game newGame = new Game();
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in); //Main Prompting Section
         System.out.println("Note: Red Text on Board = Your location, Green Square on Board = Property you Own\n");
         System.out.println("Please enter the name of your first player:");
         Player player1 = new Player(in.nextLine(),newGame.tiles);
@@ -37,10 +37,10 @@ public class Main {
         }
 
         boolean gameOn = true;
-        Link currentPlayerLink = newGame.players.first;
+        Link currentPlayerLink = newGame.players.first; //Starting Point
         newGame.currentPlayer = (Player)(currentPlayerLink.data);
 
-        while(gameOn){
+        while(gameOn){ //Central Game Loop
 
                 newGame.currentPlayer = (Player)(currentPlayerLink.data);
                 newGame.turn(((Player)(currentPlayerLink.data)),((Player)(currentPlayerLink.data)).currentBoardSpace);
@@ -49,7 +49,7 @@ public class Main {
                     if(Integer.parseInt(in.nextLine())==1){
                         newGame.trade(newGame.currentPlayer);
                     }
-                    if(!((Player)(currentPlayerLink.data)).completedSets.isEmpty()){
+                    if(!((Player)(currentPlayerLink.data)).completedSets.isEmpty()){ //If completed sets is not empty, prompt for upgrade
                         System.out.println("Would you like to upgrade (add houses/hotels to) any of your completed sets? (n:0, y:1)");
                         if(Integer.parseInt(in.nextLine())== 1){
                             newGame.upgrade(((Player)(currentPlayerLink.data)));
@@ -58,7 +58,7 @@ public class Main {
                 }
 
 
-            currentPlayerLink = currentPlayerLink.nextLink;
+            currentPlayerLink = currentPlayerLink.nextLink; //Increment
         }
        
     }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Player {
-
+    //Player data
     BoardSpace currentBoardSpace;
     int jailRolls;
     String name;
@@ -16,7 +16,7 @@ public class Player {
         money = 1500;
     }
 
-    public void parseForCompletedSets(Player owner, CircularLinkedList list){
+    public void parseForCompletedSets(Player owner, CircularLinkedList list){ //Finds completed sets
         BoardSpace.tileType[] sets = {BoardSpace.tileType.Red, BoardSpace.tileType.Orange, BoardSpace.tileType.Yellow, BoardSpace.tileType.Green, BoardSpace.tileType.Blue, BoardSpace.tileType.lightBlue, BoardSpace.tileType.Brown, BoardSpace.tileType.Pink, BoardSpace.tileType.Utilities, BoardSpace.tileType.Railroad};
         //Red, Orange, Yellow, Green, Blue, lightBlue, Brown, Pink, Utilities, Railroad
         for(int type = 0;type < 10;type++) {
@@ -28,46 +28,46 @@ public class Player {
                     j++;
                 }
                 if (((BoardSpace)(currentLink.data)).getThisTileType() == sets[type] && ((BoardSpace)(currentLink.data)).getOwner() == owner) {
-                    setNum++;
+                    setNum++; //Counting amount of a particular type of tile
                 }
                 currentLink = currentLink.nextLink;
             }
             boolean preExisting = false;
-            if((type == 4 || type == 6 || type == 8) && setNum == 2){
+            if((type == 4 || type == 6 || type == 8) && setNum == 2){ //Some colors + utilities come in sets of 2
                 for(int i = 0;i < owner.getCompletedSets().size();i++){
                     if(owner.getCompletedSets().contains(sets[type])){
-                        preExisting = true;
+                        preExisting = true; //Duplicate check
                     }
                 }
-                if(!preExisting){
+                if(!preExisting){ //Prevents duplicates
                     owner.addToCompletedSets(sets[type]);
                 }
             }
-            else if(type == 9 && setNum == 4){
+            else if(type == 9 && setNum == 4){ //4 Railroads needed for a full set
                 for(int i = 0;i < owner.getCompletedSets().size();i++){
                     if(owner.getCompletedSets().contains(sets[type])){
-                        preExisting = true;
+                        preExisting = true; //Duplicate check
                     }
                 }
-                if(!preExisting){
+                if(!preExisting){ //Prevents duplicates
                     owner.addToCompletedSets(sets[type]);
                 }
             }
             else{
-                if(setNum == 3){
+                if(setNum == 3){ //Most colors need 3 for a set
                     for(int i = 0;i < owner.getCompletedSets().size();i++){
                         if(owner.getCompletedSets().contains(sets[type])){
-                            preExisting = true;
+                            preExisting = true; //Duplicate check
                         }
                     }
-                    if(!preExisting){
+                    if(!preExisting){   //Prevents duplicates
                         owner.addToCompletedSets(sets[type]);
                     }
                 }
             }
         }
     }
-    public void printPlayerAttributes(){
+    public void printPlayerAttributes(){ //Prints important player data
         System.out.println("Money: "+money);
         System.out.println("Owned Properties: ");
         for(int i = 0; i < ownedProperties.size(); i++){
